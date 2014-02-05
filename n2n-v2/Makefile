@@ -58,4 +58,4 @@ define Package/n2n-v2/conffiles
 /etc/config/n2n
 endef
 
-$(eval $(call BuildPackage,n2n))
+$(eval $(call BuildPackage,n2n-v2))
