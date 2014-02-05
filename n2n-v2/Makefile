@@ -28,7 +28,7 @@ define Package/n2n-v2
   TITLE:=VPN tunneling daemon
   URL:=http://www.ntop.org/n2n/
   SUBMENU:=VPN
-  DEPENDS:=+libpthread +kmod-tun 
+  DEPENDS:=+libpthread +kmod-tun
   DEPENDS+=$(if $(CONFIG_N2N_AES_ENCRYPTION), +libopenssl)
 endef
 
@@ -41,7 +41,7 @@ MAKE_VARS += \
   INSTALL_PROG=":"
 
 ifeq ($(CONFIG_N2N_AES_ENCRYPTION),n)
-  MAKE_VARS += N2N_OPTION_AES=no 
+  MAKE_VARS += N2N_OPTION_AES=no
 endif
 
 define Package/n2n-v2/install
