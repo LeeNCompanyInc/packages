@@ -44,7 +44,7 @@ ifeq ($(CONFIG_N2N_AES_ENCRYPTION),n)
   MAKE_VARS += N2N_OPTION_AES=no 
 endif
 
-define Package/n2n/install
+define Package/n2n-v2/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/edge $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/supernode $(1)/usr/sbin/
@@ -54,7 +54,7 @@ define Package/n2n/install
 	$(INSTALL_BIN) ./files/n2n_v2.init $(1)/etc/init.d/n2n
 endef
 
-define Package/n2n/conffiles
+define Package/n2n-v2/conffiles
 /etc/config/n2n
 endef
 
