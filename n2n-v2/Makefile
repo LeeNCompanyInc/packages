@@ -20,6 +20,9 @@ PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.gz
 PKG_SOURCE_PROTO:=svn
 PKG_SOURCE_VERSION:=$(PKG_REV)
 
+PKG_CONFIG_DEPENDS := \
+	CONFIG_N2N_AES_ENCRYPTION
+
 include $(INCLUDE_DIR)/package.mk
 
 define Package/n2n-v2
@@ -28,7 +31,7 @@ define Package/n2n-v2
   TITLE:=VPN tunneling daemon
   URL:=http://www.ntop.org/n2n/
   SUBMENU:=VPN
-  DEPENDS:=+libc +libpthread +kmod-tun
+  DEPENDS:=+libc +libpthread +kmod-tun +CONFIG_N2N_AES_ENCRYPTION:libopenssl)
 endef
 
 define Package/n2n-v2/config
@@ -37,8 +40,11 @@ endef
 
 MAKE_VARS += \
   LIBTOOL="$(STAGING_DIR)/host/bin/libtool" \
-  INSTALL_PROG=":" \
-  N2N_OPTION_AES=no
+  INSTALL_PROG=":"
+
+ifeq ($(CONFIG_N2N_AES_ENCRYPTION),n)
+  MAKE_VARS += N2N_OPTION_AES=no
+endif
 
 define Package/n2n-v2/install
 	$(INSTALL_DIR) $(1)/usr/sbin
