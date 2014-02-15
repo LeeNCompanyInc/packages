@@ -31,7 +31,7 @@ define Package/n2n-v2
   TITLE:=VPN tunneling daemon
   URL:=http://www.ntop.org/n2n/
   SUBMENU:=VPN
-  DEPENDS:=+libc +libpthread +kmod-tun +CONFIG_N2N_AES_ENCRYPTION:libopenssl)
+  DEPENDS:=+libc +libpthread +kmod-tun +CONFIG_N2N_AES_ENCRYPTION:libopenssl
 endef
 
 define Package/n2n-v2/config
