@@ -42,7 +42,7 @@ MAKE_VARS += \
   LIBTOOL="$(STAGING_DIR)/host/bin/libtool" \
   INSTALL_PROG=":"
 
-ifeq ($(CONFIG_N2N_AES_ENCRYPTION),n)
+ifneq ($(CONFIG_N2N_AES_ENCRYPTION),y)
   MAKE_VARS += N2N_OPTION_AES=no
 endif
 
