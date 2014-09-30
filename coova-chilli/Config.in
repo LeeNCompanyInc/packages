@@ -1,59 +1,63 @@
 # CoovaChilli advanced configuration
 
 menu "Configuration"
-       depends on PACKAGE_coova-chilli
+	depends on PACKAGE_coova-chilli
 
 config COOVACHILLI_REDIR
-       bool "Enable support for redir server. Required for uamregex"
-       default n
+	bool "Enable support for redir server. Required for uamregex"
+	default n
 
 config COOVACHILLI_MINIPORTAL
-       bool "Enable support Coova miniportal"
-       default n
+	bool "Enable support Coova miniportal"
+	default n
 
 config COOVACHILLI_USERAGENT
-       bool "Enable recording user-agent"
-       default n
+	bool "Enable recording user-agent"
+	default n
 
 config COOVACHILLI_DNSLOG
-       bool "Enable support to log DNS name queries"
-       default n
+	bool "Enable support to log DNS name queries"
+	default n
 
 config COOVACHILLI_UAMDOMAINFILE
-       bool "Enable loading of mass uamdomains from file"
-       default n
+	bool "Enable loading of mass uamdomains from file"
+	default n
+
+config COOVACHILLI_LARGELIMITS
+	bool "Enable larger limits for use with non-embedded systems"
+	default n
 
 config COOVACHILLI_PROXY
-       bool "Enable proxy"
-       default n
+	bool "Enable proxy"
+	default n
 
 config COOVACHILLI_MINICONFIG
-       bool "Enable mini configuration file"
-       default n
+	bool "Enable mini configuration file"
+	default n
 
 config COOVACHILLI_BINSTATUSFILE
-       bool "Enable binary status file"
-       default n
+	bool "Enable binary status file"
+	default n
 
 config COOVACHILLI_LAYER3
-       bool "Enable Layer 3 mode"
-       default n
+	bool "Enable Layer 3 mode"
+	default n
 
 choice
-       prompt "SSL library"
-       default COOVACHILLI_NOSSL
+	prompt "SSL library"
+	default COOVACHILLI_NOSSL
 
 config COOVACHILLI_NOSSL
-       bool "No SSL support"
+	bool "No SSL support"
 
 config COOVACHILLI_MATRIXSSL
-       bool "MatrixSSL"
+	bool "MatrixSSL"
 
 config COOVACHILLI_CYASSL
-       bool "CyaSSL"
+	bool "CyaSSL"
 
 config COOVACHILLI_OPENSSL
-       bool "OpenSSL"
+	bool "OpenSSL"
 
 endchoice
 
