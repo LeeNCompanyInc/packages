@@ -23,7 +23,10 @@ PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_CONFIG_DEPENDS := \
 	CONFIG_N2N_AES_ENCRYPTION
 
+CMAKE_INSTALL := 1
+
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/cmake.mk
 
 define Package/n2n-v2
   SECTION:=net
@@ -38,12 +41,8 @@ define Package/n2n-v2/config
 	source "$(SOURCE)/Config.in"
 endef
 
-MAKE_VARS += \
-  LIBTOOL="$(STAGING_DIR)/host/bin/libtool" \
-  INSTALL_PROG=":"
-
 ifneq ($(CONFIG_N2N_AES_ENCRYPTION),y)
-  MAKE_VARS += N2N_OPTION_AES=no
+  CMAKE_OPTIONS += -DN2N_OPTION_AES=no
 endif
 
 define Package/n2n-v2/install
