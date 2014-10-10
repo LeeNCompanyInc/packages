@@ -7,9 +7,9 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_BRANCH:=master
-PKG_SOURCE_URL:=git://github.com/lukablurr/n2n_v2_fork
-PKG_REV:=d3bc1d5a81b22637d6ec5cb2712f3bbfa6232b27
+PKG_BRANCH:=trunk
+PKG_SOURCE_URL:=https://svn.ntop.org/svn/ntop/trunk/n2n/n2n_v2/
+PKG_REV:=6606
 
 PKG_NAME:=n2n-v2
 PKG_VERSION:=$(PKG_REV)
@@ -17,7 +17,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.gz
-PKG_SOURCE_PROTO:=git
+PKG_SOURCE_PROTO:=svn
 PKG_SOURCE_VERSION:=$(PKG_REV)
 
 PKG_CONFIG_DEPENDS := \
