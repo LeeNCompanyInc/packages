@@ -31,7 +31,10 @@ PKG_CONFIG_DEPENDS := \
   COOVACHILLI_BINSTATUSFILE \
   COOVACHILLI_PROXY \
   COOVACHILLI_MINICONFIG \
-  COOVACHILLI_LAYER3
+  COOVACHILLI_LAYER3 \
+  COOVACHILLI_DISABLE_LEAKYBUCKET \
+  COOVACHILLI_RTMON \
+  COOVACHILLI_CURL
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/kernel.mk
@@ -40,7 +43,7 @@ define Package/coova-chilli
   SUBMENU:=Captive Portals
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+kmod-tun +librt +COOVACHILLI_MINIPORTAL:haserl +COOVACHILLI_MATRIXSSL:libmatrixssl +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_OPENSSL:libopenssl
+  DEPENDS:=+kmod-tun +librt +COOVACHILLI_MINIPORTAL:haserl +COOVACHILLI_MATRIXSSL:libmatrixssl +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_OPENSSL:libopenssl +COOVACHILLI_CURL:libcurl
   TITLE:=Wireless LAN HotSpot controller (Coova Chilli Version)
   URL:=http://www.coova.org/CoovaChilli
   MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
@@ -76,6 +79,8 @@ endef
 
 DISABLE_NLS=
 
+TARGET_CFLAGS += $(FPIC) \
+
 CONFIGURE_VARS += \
        KERNEL_DIR="$(LINUX_DIR)"
 
@@ -101,6 +106,9 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLI_PROXY),--enable,--disable)-chilliproxy \
 	$(if $(CONFIG_COOVACHILLI_MINICONFIG),--enable,--disable)-miniconfig \
 	$(if $(CONFIG_COOVACHILLI_LAYER3),--enable,--disable)-layer3 \
+	$(if $(CONFIG_COOVACHILLI_DISABLE_LEAKYBUCKET),--disable-leakybucket,) \
+	$(if $(CONFIG_COOVACHILLI_RTMON),--enable-rtmon,) \
+	$(if $(CONFIG_COOVACHILLI_CURL),--with-curl) \
 	$(if $(CONFIG_PACKAGE_kmod-coova),--with-nfcoova,) \
 	)
 endef

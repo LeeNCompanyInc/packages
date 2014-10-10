@@ -43,6 +43,18 @@ config COOVACHILLI_LAYER3
 	bool "Enable Layer 3 mode"
 	default n
 
+config COOVACHILLI_DISABLE_LEAKYBUCKET
+	bool "Disable use of leaky bucket rate shaping."
+	default n
+
+config COOVACHILLI_RTMON
+	bool "Enable support for route monitoring deamon (experimental)"
+	default n
+
+config COOVACHILLI_CURL
+	bool "enable support for curl (optional and used with --enable-chilliproxy)"
+	default n
+
 choice
 	prompt "SSL library"
 	default COOVACHILLI_NOSSL
