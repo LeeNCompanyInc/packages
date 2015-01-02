@@ -8,12 +8,18 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=coova-chilli
-PKG_VERSION:=1.3.0
-PKG_RELEASE:=5
+PKG_VERSION:=1.3.0+20141128
+PKG_MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
+PKG_LICENSE:=GPL-2.0+
+PKG_LICENSE_FILES:=COPYING
+PKG_RELEASE:=1
 
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=git://github.com/coova/coova-chilli
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=b93de20a288c01c2ba28e96e31ad6da01627f45f
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://ap.coova.org/chilli
-PKG_MD5SUM:=dc0037e3cdebcb60508081b4e42e984a
+PKG_MD5SUM:=2adb27ec56172b18c5beee359dd7898d
 
 PKG_INSTALL:=1
 
@@ -46,7 +52,6 @@ define Package/coova-chilli
   DEPENDS:=+kmod-tun +librt +COOVACHILLI_MINIPORTAL:haserl +COOVACHILLI_MATRIXSSL:libmatrixssl +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_OPENSSL:libopenssl +COOVACHILLI_CURL:libcurl
   TITLE:=Wireless LAN HotSpot controller (Coova Chilli Version)
   URL:=http://www.coova.org/CoovaChilli
-  MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
   MENU:=1
 endef
 
@@ -90,6 +95,15 @@ MAKE_FLAGS += \
 MAKE_INSTALL_FLAGS += \
        KERNEL_DIR="$(LINUX_DIR)" \
        INSTALL_MOD_PATH="$(PKG_INSTALL_DIR)"
+
+define Build/Prepare
+$(call Build/Prepare/Default)
+	( cd $(PKG_BUILD_DIR) ; \
+		[ -f ./configure ] || { \
+			./bootstrap ; \
+		} \
+	)
+endef
 
 define Build/Configure
 	$(call Build/Configure/Default, \
