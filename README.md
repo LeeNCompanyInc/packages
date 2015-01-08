@@ -14,6 +14,10 @@ make menuconfig
 make
 ```
 
+#### Coova-chilli
+
+* chilli.init and chilli.firewall from: https://lists.openwrt.org/pipermail/openwrt-devel/2012-December/018075.html (check out attachment)
+
 #### n2n_v2
 
 * Makefile from: http://pastebin.com/AUKXbuzr
