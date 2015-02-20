@@ -145,7 +145,7 @@ define Package/coova-chilli/install
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so.* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(CP) files/chilli.init $(1)/etc/init.d/chilli
+	$(INSTALL_BIN) files/chilli.init $(1)/etc/init.d/chilli
 	$(INSTALL_DIR) $(1)/lib/firewall
 	$(CP) files/chilli.firewall $(1)/lib/firewall/chilli.sh
 endef
