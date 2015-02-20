@@ -73,7 +73,9 @@ endef
 define KernelPackage/coova
   URL:=http://www.coova.org/CoovaChilli
   SUBMENU:=Network Support
-  DEPENDS:=+coova-chilli
+  DEPENDS:=+coova-chilli +libxtables
+  KCONFIG:= \
+  	NETFILTER_XTABLES
   TITLE:=Coova kernel module
   FILES:=$(PKG_BUILD_DIR)/src/linux/xt_coova.$(LINUX_KMOD_SUFFIX)
   AUTOLOAD:=$(call AutoLoad,90,coova)
