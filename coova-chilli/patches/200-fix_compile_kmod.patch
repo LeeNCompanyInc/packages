@@ -15,6 +15,3 @@
  
  distdir:
  
--distclean: clean
-\ No newline at end of file
-+distclean: clean
