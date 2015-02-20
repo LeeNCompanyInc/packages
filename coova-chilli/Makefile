@@ -69,19 +69,19 @@ define Package/coova-chilli/config
   source "$(SOURCE)/Config.in"
 endef
 
-define KernelPackage/coova
+define KernelPackage/ipt-coova
   URL:=http://www.coova.org/CoovaChilli
-  SUBMENU:=Network Support
-  DEPENDS:=+coova-chilli +libxtables
-  KCONFIG:= \
-  	NETFILTER_XTABLES
-  TITLE:=Coova kernel module
-  FILES:=$(PKG_BUILD_DIR)/src/linux/xt_coova.$(LINUX_KMOD_SUFFIX)
-  AUTOLOAD:=$(call AutoLoad,90,coova)
+  SUBMENU:=Netfilter Extensions
+  DEPENDS:=coova-chilli +kmod-ipt-core +libxtables
+  TITLE:=Coova netfilter module
+  FILES:=$(PKG_BUILD_DIR)/src/linux/xt_*.$(LINUX_KMOD_SUFFIX)
+  AUTOLOAD:=$(call AutoLoad,,xt_coova)
 endef
 
-define KernelPackage/coova/description
-	Kernel module for CoovaChilli
+define KernelPackage/ipt-coova/description
+	Netfilter kernel module for CoovaChilli
+	Includes:
+	- coova
 endef
 
 DISABLE_NLS=
@@ -125,7 +125,7 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLI_DISABLE_LEAKYBUCKET),--disable-leakybucket,) \
 	$(if $(CONFIG_COOVACHILLI_RTMON),--enable-rtmon,) \
 	$(if $(CONFIG_COOVACHILLI_CURL),--with-curl) \
-	$(if $(CONFIG_PACKAGE_kmod-coova),--with-nfcoova,) \
+	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
 	)
 endef
 
@@ -150,10 +150,5 @@ define Package/coova-chilli/install
 	$(CP) files/chilli.firewall $(1)/lib/firewall/chilli.sh
 endef
 
-define KernelPackage/coova/install
-	$(INSTALL_DIR) $(1)/usr/lib/iptables
-	$(CP) $(PKG_BUILD_DIR)/src/linux/lib*.so $(1)/usr/lib/iptables/
-endef
-
 $(eval $(call BuildPackage,coova-chilli))
-$(eval $(call KernelPackage,coova))
+$(eval $(call KernelPackage,ipt-coova))
