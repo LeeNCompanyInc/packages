@@ -86,7 +86,7 @@ endef
 
 DISABLE_NLS=
 
-TARGET_CFLAGS += $(FPIC) \
+TARGET_CFLAGS += $(FPIC)
 
 CONFIGURE_VARS += \
        KERNEL_DIR="$(LINUX_DIR)"
@@ -122,8 +122,8 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLI_PROXY),--enable,--disable)-chilliproxy \
 	$(if $(CONFIG_COOVACHILLI_MINICONFIG),--enable,--disable)-miniconfig \
 	$(if $(CONFIG_COOVACHILLI_LAYER3),--enable,--disable)-layer3 \
-	$(if $(CONFIG_COOVACHILLI_DISABLE_LEAKYBUCKET),--disable-leakybucket,) \
-	$(if $(CONFIG_COOVACHILLI_RTMON),--enable-rtmon,) \
+	$(if $(CONFIG_COOVACHILLI_DISABLE_LEAKYBUCKET),--disable-leakybucket) \
+	$(if $(CONFIG_COOVACHILLI_RTMON),--enable-rtmon) \
 	$(if $(CONFIG_COOVACHILLI_CURL),--with-curl) \
 	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
 	)
