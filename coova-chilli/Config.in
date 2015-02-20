@@ -55,6 +55,10 @@ config COOVACHILLI_CURL
 	bool "enable support for curl (optional and used with --enable-chilliproxy)"
 	default n
 
+config COOVACHILLI_NFQUEUE
+	bool "enable support for netfilter_queue"
+	default n
+
 choice
 	prompt "SSL library"
 	default COOVACHILLI_NOSSL
