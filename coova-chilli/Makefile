@@ -40,7 +40,6 @@ PKG_CONFIG_DEPENDS := \
   COOVACHILLI_LAYER3 \
   COOVACHILLI_DISABLE_LEAKYBUCKET \
   COOVACHILLI_RTMON \
-  COOVACHILLI_NFQUEUE \
   COOVACHILLI_CURL
 
 include $(INCLUDE_DIR)/package.mk
@@ -50,7 +49,7 @@ define Package/coova-chilli
   SUBMENU:=Captive Portals
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+kmod-tun +librt +COOVACHILLI_MINIPORTAL:haserl +COOVACHILLI_MATRIXSSL:libmatrixssl +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_NFQUEUE:iptables-mod-nfqueue +COOVACHILLI_OPENSSL:libopenssl +COOVACHILLI_CURL:libcurl
+  DEPENDS:=+kmod-tun +librt +COOVACHILLI_MINIPORTAL:haserl +COOVACHILLI_MATRIXSSL:libmatrixssl +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_OPENSSL:libopenssl +COOVACHILLI_CURL:libcurl
   TITLE:=Wireless LAN HotSpot controller (Coova Chilli Version)
   URL:=http://www.coova.org/CoovaChilli
   MENU:=1
