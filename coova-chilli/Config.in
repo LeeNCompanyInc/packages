@@ -55,6 +55,10 @@ config COOVACHILLI_CURL
 	bool "enable support for curl (optional and used with --enable-chilliproxy)"
 	default n
 
+config COOVACHILLI_DEBUG
+	bool "Enable debug messages"
+	default n
+
 choice
 	prompt "SSL library"
 	default COOVACHILLI_NOSSL

@@ -125,6 +125,7 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLI_DISABLE_LEAKYBUCKET),--disable-leakybucket) \
 	$(if $(CONFIG_COOVACHILLI_RTMON),--enable-rtmon) \
 	$(if $(CONFIG_COOVACHILLI_CURL),--with-curl) \
+	$(if $(CONFIG_COOVACHILLI_DEBUG),--enable,--disable)-debug \
 	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
 	)
 endef
