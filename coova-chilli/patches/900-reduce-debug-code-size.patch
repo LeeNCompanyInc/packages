@@ -1,0 +1,78 @@
+--- a/src/syserr.h
++++ b/src/syserr.h
+@@ -23,6 +23,7 @@
+ 
+ #define SYSERR_MSGSIZE 256
+ 
++#if (defined(ENABLE_DEBUG) || defined(ENABLE_DEBUG2))
+ void sys_err(int pri, char *filename, int line, int en, const char *fmt, ...);
+ void sys_errpack(int pri, char *fn, int ln, int en, struct sockaddr_in *peer,
+ 		 void *pack, unsigned len, char *fmt, ...);
+@@ -34,4 +35,12 @@ void sys_errpack(int pri, char *fn, int 
+ #define log_info(fmt,args...)   sys_err(LOG_NOTICE,  __FILE__,__LINE__,0,fmt,## args)
+ #define log_err(e,fmt,args...)  sys_err(LOG_ERR,     __FILE__,__LINE__,e,fmt,## args)
+ 
++#else
++#define log(p,fmt,args...)      do { } while(0)
++#define log_dbg(fmt,args...)    do { } while(0)
++#define log_warn(e,fmt,args...) do { } while(0)
++#define log_info(fmt,args...)   do { } while(0)
++#define log_err(e,fmt,args...)  do { } while(0)
++
++#endif /* ENABLE_DEBUG || ENABLE_DEBUG2 */
+ #endif	/* !_SYSERR_H */
+--- a/src/syserr.c
++++ b/src/syserr.c
+@@ -20,6 +20,7 @@
+ 
+ #include "chilli.h"
+ 
++#if (defined(ENABLE_DEBUG) || defined(ENABLE_DEBUG2))
+ void sys_err(int pri, char *fn, int ln, int en, const char *fmt, ...) {
+   if (pri==LOG_DEBUG && !_options.debug) return;
+   {
+@@ -76,3 +77,4 @@ void sys_errpack(int pri, char *fn, int 
+   bdestroy(bt);
+   bdestroy(bt2);
+ }
++#endif /* NEED_PRINTF */
+--- a/src/chilli.c
++++ b/src/chilli.c
+@@ -3742,10 +3742,14 @@ session_disconnect(struct app_conn_t *ap
+       if (!appconn->natip.s_addr) {
+ 	if (member->in_use && member->is_static) {
+ 	  struct in_addr mask;
+-	  int res;
+ 	  mask.s_addr = 0xffffffff;
++#if(_debug_)
++	  int res;
+ 	  res = net_del_route(&member->addr, &appconn->ourip, &mask);
+ 	  log_dbg("Removing route: %s %d", inet_ntoa(member->addr), res);
++#else
++    net_del_route(&member->addr, &appconn->ourip, &mask);
++#endif
+ 	}
+       } else {
+ 	struct ippoolm_t *natipm;
+--- a/src/redir.c
++++ b/src/redir.c
+@@ -2453,7 +2453,9 @@ static int redir_cb_radius_auth_conf(str
+ 				     struct radius_packet_t *pack_req, void *cbp) {
+   struct redir_conn_t *conn = (struct redir_conn_t*) cbp;
+   struct radius_attr_t *attr = NULL;
++#if(_debug_)
+   char attrs[RADIUS_ATTR_VLEN+1];
++#endif
+   int instance = 0;
+ 
+   log_dbg("Received RADIUS response");
+@@ -2606,7 +2608,9 @@ static int redir_cb_radius_auth_conf(str
+     time_t timenow = mainclock_now();
+     if (timenow > conn->s_params.sessionterminatetime) {
+       conn->response = REDIR_FAILED_OTHER;
++#if(_debug_)
+       log_warn(0, "WISPr-Session-Terminate-Time in the past received: %s", attrs);
++#endif
+       return 0;
+     }
+   }
