@@ -142,7 +142,10 @@ define Package/coova-chilli/install
 	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/chilli.conf $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/chilli
-	$(CP) -R $(PKG_INSTALL_DIR)/etc/chilli/* $(1)/etc/chilli/
+	$(CP) $(PKG_INSTALL_DIR)/etc/chilli/* $(1)/etc/chilli/
+	$(if $(CONFIG_COOVACHILLI_MINIPORTAL),, \
+		rm -rf $(1)/etc/chilli/www; \
+	)
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_DATA) files/chilli.config $(1)/etc/config/chilli
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface
