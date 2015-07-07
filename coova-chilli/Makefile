@@ -135,7 +135,7 @@ define Build/Configure
 endef
 
 define Package/coova-chilli/conffiles
-/etc/chilli.conf
+/etc/config/chilli
 endef
 
 define Package/coova-chilli/install
@@ -143,6 +143,8 @@ define Package/coova-chilli/install
 	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/chilli.conf $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/chilli
 	$(CP) -R $(PKG_INSTALL_DIR)/etc/chilli/* $(1)/etc/chilli/
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) files/chilli.config $(1)/etc/config/chilli
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface
 	$(INSTALL_DATA) ./files/chilli.hotplug $(1)/etc/hotplug.d/iface/30-chilli
 	$(INSTALL_DIR) $(1)/usr/sbin
