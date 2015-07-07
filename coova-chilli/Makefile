@@ -158,6 +158,10 @@ define Package/coova-chilli/install
 	$(INSTALL_BIN) files/chilli.init $(1)/etc/init.d/chilli
 	$(INSTALL_DIR) $(1)/lib/firewall
 	$(CP) files/chilli.firewall $(1)/lib/firewall/chilli.sh
+	$(if $(CONFIG_PACKAGE_kmod-ipt-coova), \
+		$(INSTALL_DIR) $(1)/usr/lib/iptables; \
+		$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib*.so $(1)/usr/lib/iptables/; \
+	)
 endef
 
 $(eval $(call BuildPackage,coova-chilli))
