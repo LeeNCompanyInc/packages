@@ -75,7 +75,7 @@ define KernelPackage/ipt-coova
   DEPENDS:=coova-chilli +kmod-ipt-core +libxtables
   TITLE:=Coova netfilter module
   FILES:=$(PKG_BUILD_DIR)/src/linux/xt_*.$(LINUX_KMOD_SUFFIX)
-  AUTOLOAD:=$(call AutoLoad,,xt_coova)
+  AUTOLOAD:=$(call AutoProbe,xt_coova)
 endef
 
 define KernelPackage/ipt-coova/description
