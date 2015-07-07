@@ -57,6 +57,10 @@ config COOVACHILLI_CURL
 
 config COOVACHILLI_DEBUG
 	bool "Enable debug messages"
+	default y
+
+config COOVACHILLI_VERBOSE
+	bool "Enable verbose debugging"
 	default n
 
 choice

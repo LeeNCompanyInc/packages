@@ -126,6 +126,7 @@ define Build/Configure
 	$(if $(CONFIG_COOVACHILLI_RTMON),--enable-rtmon) \
 	$(if $(CONFIG_COOVACHILLI_CURL),--with-curl) \
 	$(if $(CONFIG_COOVACHILLI_DEBUG),--enable,--disable)-debug \
+	$(if $(CONFIG_COOVACHILLI_VERBOSE),--enable,--disable)-debug2 \
 	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
 	)
 endef
