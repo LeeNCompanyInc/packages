@@ -1,0 +1,63 @@
+--- a/src/dhcp.c
++++ b/src/dhcp.c
+@@ -411,7 +411,9 @@ int dhcp_net_send(struct _net_interface 
+   log_dbg("dhcp_send() len=%d", length);
+ #endif
+   
+-  return net_write_eth(netif, packet, length, &netif->dest);
++  if (length > 54) {
++    return net_write_eth(netif, packet, length, &netif->dest);
++  }
+ 
+ #elif defined (__FreeBSD__) || defined (__APPLE__) || defined (__OpenBSD__) || defined (__NetBSD__)
+   if (safe_write(netif->fd, packet, length) < 0) {
+--- a/src/linux/xt_coova.c
++++ b/src/linux/xt_coova.c
+@@ -302,13 +302,13 @@ static int coova_mt_check(const struct x
+ 	    strnlen(info->name, XT_COOVA_NAME_LEN) == XT_COOVA_NAME_LEN)
+ 		return -EINVAL;
+ 
+-	printk(KERN_INFO "xt_coova: looking for %s\n", info->name);
++	printk(KERN_DEBUG "xt_coova: looking for %s\n", info->name);
+ 
+ 	mutex_lock(&coova_mutex);
+ 	t = coova_table_lookup(info->name);
+ 	if (t != NULL) {
+ 		t->refcnt++;
+-		printk(KERN_INFO "xt_coova: found %s refcnt=%d\n", 
++		printk(KERN_DEBUG "xt_coova: found %s refcnt=%d\n", 
+ 		       info->name, t->refcnt);
+ 		goto out;
+ 	}
+@@ -339,11 +339,11 @@ static int coova_mt_check(const struct x
+ 	spin_lock_bh(&coova_lock);
+ 	list_add_tail(&t->list, &tables);
+ 	spin_unlock_bh(&coova_lock);
+-	printk(KERN_INFO "xt_coova: created %s refcnt=%d\n", 
++	printk(KERN_DEBUG "xt_coova: created %s refcnt=%d\n", 
+ 	       t->name, t->refcnt);
+ out:
+ 	mutex_unlock(&coova_mutex);
+-	printk(KERN_INFO "xt_coova: match ret=%d\n", ret); 
++	printk(KERN_DEBUG "xt_coova: match ret=%d\n", ret); 
+ 	return ret;
+ }
+ 
+@@ -499,7 +499,7 @@ coova_mt_proc_write(struct file *file, c
+ 		release = true;
+ 		break;
+ 	default:
+-		printk(KERN_INFO KBUILD_MODNAME ": Need +ip, -ip, or /\n");
++		printk(KERN_ERR KBUILD_MODNAME ": Need +ip, -ip, or /\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -514,7 +514,7 @@ coova_mt_proc_write(struct file *file, c
+ 	}
+ 
+ 	if (!succ) {
+-		printk(KERN_INFO KBUILD_MODNAME ": illegal address written "
++		printk(KERN_ERR KBUILD_MODNAME ": illegal address written "
+ 		       "to procfs\n");
+ 		return -EINVAL;
+ 	}
