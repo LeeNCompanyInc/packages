@@ -13,7 +13,7 @@
    if (safe_write(netif->fd, packet, length) < 0) {
 --- a/src/linux/xt_coova.c
 +++ b/src/linux/xt_coova.c
-@@ -302,13 +302,13 @@ static int coova_mt_check(const struct x
+@@ -303,13 +303,13 @@ static int coova_mt_check(const struct x
  	    strnlen(info->name, XT_COOVA_NAME_LEN) == XT_COOVA_NAME_LEN)
  		return -EINVAL;
  
@@ -29,7 +29,7 @@
  		       info->name, t->refcnt);
  		goto out;
  	}
-@@ -339,11 +339,11 @@ static int coova_mt_check(const struct x
+@@ -340,11 +340,11 @@ static int coova_mt_check(const struct x
  	spin_lock_bh(&coova_lock);
  	list_add_tail(&t->list, &tables);
  	spin_unlock_bh(&coova_lock);
@@ -43,7 +43,7 @@
  	return ret;
  }
  
-@@ -499,7 +499,7 @@ coova_mt_proc_write(struct file *file, c
+@@ -500,7 +500,7 @@ coova_mt_proc_write(struct file *file, c
  		release = true;
  		break;
  	default:
@@ -52,7 +52,7 @@
  		return -EINVAL;
  	}
  
-@@ -514,7 +514,7 @@ coova_mt_proc_write(struct file *file, c
+@@ -515,7 +515,7 @@ coova_mt_proc_write(struct file *file, c
  	}
  
  	if (!succ) {
