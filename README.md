@@ -7,7 +7,7 @@ Various packages does not come with OpenWrt default feeds
 
 ```
 cp feeds.conf.default feeds.conf
-echo "src-git my_packages https://github.com/teslamint/openwrt-packages.git" >> feeds.conf
+echo "src-git my_packages https://github.com/LeeNCompanyInc/packages.git" >> feeds.conf
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 make menuconfig
