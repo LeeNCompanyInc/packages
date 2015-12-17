@@ -1,6 +1,8 @@
 openwrt-packages
 ================
 
+[![Build Status](https://travis-ci.org/LeeNCompanyInc/packages.svg?branch=for-14.07)](https://travis-ci.org/LeeNCompanyInc/packages)
+
 Various packages does not come with OpenWrt default feeds
 
 ## How to Install
