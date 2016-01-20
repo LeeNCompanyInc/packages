@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2007-2014 OpenWrt.org
+# Copyright (C) 2007-2013 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,63 +8,39 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=coova-chilli
-PKG_VERSION:=1.3.1.3
+PKG_VERSION:=1.3.0+20141128
 PKG_MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
-PKG_RELEASE:=2
+PKG_RELEASE:=1
 
-PKG_SOURCE_URL:=https://github.com/coova/coova-chilli/archive/
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=git://github.com/coova/coova-chilli
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE:=$(PKG_VERSION).tar.gz
-PKG_MD5SUM:=09df3a3baf4319b20ec2b2a3135d7558
+PKG_SOURCE_VERSION:=b93de20a288c01c2ba28e96e31ad6da01627f45f
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_MD5SUM:=2adb27ec56172b18c5beee359dd7898d
 
 PKG_INSTALL:=1
 
 PKG_CONFIG_DEPENDS := \
-  COOVACHILLI_ACCOUNTING_ONOFF \
-  COOVACHILLI_BINSTATUSFILE \
-  COOVACHILLI_CHILLIQUERY \
-  COOVACHILLI_COA \
-  COOVACHILLI_CONFIG_ATTRIBUTE \
-  COOVACHILLI_CURL \
-  COOVACHILLI_CYASSL \
-  COOVACHILLI_DEBUG \
-  COOVACHILLI_DEBUG2 \
-  COOVACHILLI_DHCPOPT \
-  COOVACHILLI_DHCPRADIUS \
-  COOVACHILLI_DNSLOG \
-  COOVACHILLI_FORCEDNS \
-  COOVACHILLI_IEEE8021Q \
-  COOVACHILLI_IEEE8023 \
-  COOVACHILLI_JSON \
-  COOVACHILLI_LARGELIMITS \
-  COOVACHILLI_LAYER3 \
-  COOVACHILLI_LEAKYBUCKET \
-  COOVACHILLI_LOCATION \
-  COOVACHILLI_MATRIXSSL \
-  COOVACHILLI_MINICONFIG \
   COOVACHILLI_MINIPORTAL \
-  COOVACHILLI_MMAP \
-  COOVACHILLI_NETBIOS \
-  COOVACHILLI_NETNAT \
-  COOVACHILLI_NFQUEUE \
-  COOVACHILLI_NOSSL \
-  COOVACHILLI_OPENSSL \
-  COOVACHILLI_POLL \
-  COOVACHILLI_PROXY \
-  COOVACHILLI_RADPROXY \
   COOVACHILLI_REDIR \
-  COOVACHILLI_REDIRINJECT \
-  COOVACHILLI_RTMON \
-  COOVACHILLI_SESSIONPROXY \
-  COOVACHILLI_STATUSFILE \
-  COOVACHILLI_TAP \
-  COOVACHILLI_UAMANYIP \
-  COOVACHILLI_UAMDOMAINFILE \
-  COOVACHILLI_UAMUIPORT \
   COOVACHILLI_USERAGENT \
-  COOVACHILLI_WPAD
+  COOVACHILLI_DNSLOG \
+  COOVACHILLI_UAMDOMAINFILE \
+  COOVACHILLI_LARGELIMITS \
+  COOVACHILLI_NOSSL \
+  COOVACHILLI_MATRIXSSL \
+  COOVACHILLI_CYASSL \
+  COOVACHILLI_OPENSSL \
+  COOVACHILLI_BINSTATUSFILE \
+  COOVACHILLI_PROXY \
+  COOVACHILLI_MINICONFIG \
+  COOVACHILLI_LAYER3 \
+  COOVACHILLI_DISABLE_LEAKYBUCKET \
+  COOVACHILLI_RTMON \
+  COOVACHILLI_CURL
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/kernel.mk
@@ -73,7 +49,7 @@ define Package/coova-chilli
   SUBMENU:=Captive Portals
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+kmod-tun +librt +COOVACHILLI_MINIPORTAL:haserl +COOVACHILLI_MATRIXSSL:libmatrixssl +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_OPENSSL:libopenssl +COOVACHILLI_CURL:libcurl +COOVACHILLI_NFQUEUE:libnetfilter-queue
+  DEPENDS:=+kmod-tun +librt +COOVACHILLI_MINIPORTAL:haserl +COOVACHILLI_MATRIXSSL:libmatrixssl +COOVACHILLI_CYASSL:libcyassl +COOVACHILLI_OPENSSL:libopenssl +COOVACHILLI_CURL:libcurl
   TITLE:=Wireless LAN HotSpot controller (Coova Chilli Version)
   URL:=http://www.coova.org/CoovaChilli
   MENU:=1
@@ -85,7 +61,7 @@ define Package/coova-chilli/description
 	users of a wireless (or wired) LAN. It supports web based login (UAM)
 	which is today's standard for public HotSpots and it supports Wireless
 	Protected Access (WPA) which is the standard of the future.
-	Authentication,	authorization and accounting (AAA) is handled by your
+	Authentication, authorization and accounting (AAA) is handled by your
 	favorite radius server.
 endef
 
@@ -136,48 +112,24 @@ endef
 
 define Build/Configure
 	$(call Build/Configure/Default, \
-	$(if $(CONFIG_COOVACHILLI_ACCOUNTING_ONOFF),,--disable-accounting-onoff) \
-	$(if $(CONFIG_COOVACHILLI_BINSTATUSFILE),--enable-binstatusfile) \
-	$(if $(CONFIG_COOVACHILLI_CHILLIQUERY),,--disable-chilliquery) \
-	$(if $(CONFIG_COOVACHILLI_COA),--enable-coa) \
-	$(if $(CONFIG_COOVACHILLI_CONFIG_ATTRIBUTE),,--disable-coovachilliconfig) \
-	$(if $(CONFIG_COOVACHILLI_CURL),--with-curl) \
-	$(if $(CONFIG_COOVACHILLI_CYASSL),--with-cyassl) \
-	$(if $(CONFIG_COOVACHILLI_DEBUG),,--disable-debug) \
-	$(if $(CONFIG_COOVACHILLI_DEBUG2),--enable-debug2) \
-	$(if $(CONFIG_COOVACHILLI_DHCPOPT),--enable-dhcpopt) \
-	$(if $(CONFIG_COOVACHILLI_DHCPRADIUS),,--disable-dhcpradius) \
-	$(if $(CONFIG_COOVACHILLI_DNSLOG),--enable-dnslog) \
-	$(if $(CONFIG_COOVACHILLI_FORCEDNS),--enable-forcedns) \
-	$(if $(CONFIG_COOVACHILLI_IEEE8021Q),,--disable-ieee8021q) \
-	$(if $(CONFIG_COOVACHILLI_IEEE8023),--enable-ieee8023) \
-	$(if $(CONFIG_COOVACHILLI_JSON),--enable-libjson,--disable-json) \
-	$(if $(CONFIG_COOVACHILLI_LARGELIMITS),--enable-largelimits) \
-	$(if $(CONFIG_COOVACHILLI_LAYER3),--enable-layer3) \
-	$(if $(CONFIG_COOVACHILLI_LEAKYBUCKET),,--disable-leakybucket) \
-	$(if $(CONFIG_COOVACHILLI_LOCATION),--enable-location) \
-	$(if $(CONFIG_COOVACHILLI_MATRIXSSL),--with-matrixssl) \
-	$(if $(CONFIG_COOVACHILLI_MINICONFIG),--enable-miniconfig) \
-	$(if $(CONFIG_COOVACHILLI_MINIPORTAL),--enable-miniportal) \
-	$(if $(CONFIG_COOVACHILLI_MMAP),--with-mmap) \
-	$(if $(CONFIG_COOVACHILLI_NETBIOS),--enable-netbios) \
-	$(if $(CONFIG_COOVACHILLI_NETNAT),--enable-netnat) \
-	$(if $(CONFIG_COOVACHILLI_NFQUEUE),--with-nfqueue) \
-	$(if $(CONFIG_COOVACHILLI_OPENSSL),--with-openssl) \
-	$(if $(CONFIG_COOVACHILLI_POLL),--with-poll) \
-	$(if $(CONFIG_COOVACHILLI_PROXY),--enable-chilliproxy) \
-	$(if $(CONFIG_COOVACHILLI_RADPROXY),,--disable-radproxy) \
-	$(if $(CONFIG_COOVACHILLI_REDIR),--enable-chilliredir) \
-	$(if $(CONFIG_COOVACHILLI_REDIRINJECT),--enable-redirinject) \
+	$(if $(CONFIG_COOVACHILLI_REDIR),--enable,--disable)-chilliredir \
+	$(if $(CONFIG_COOVACHILLI_DNSLOG),--enable,--disable)-dnslog \
+	$(if $(CONFIG_COOVACHILLI_MINIPORTAL),--enable,--disable)-miniportal \
+	$(if $(CONFIG_COOVACHILLI_USERAGENT),--enable,--disable)-useragent \
+	$(if $(CONFIG_COOVACHILLI_LARGELIMITS),--enable,--disable)-largelimits \
+	$(if $(CONFIG_COOVACHILLI_UAMDOMAINFILE),--enable,--disable)-uamdomainfile \
+	$(if $(CONFIG_COOVACHILLI_MATRIXSSL),--with,--without)-matrixssl \
+	$(if $(CONFIG_COOVACHILLI_CYASSL),--with,--without)-cyassl \
+	$(if $(CONFIG_COOVACHILLI_OPENSSL),--with,--without)-openssl \
+	$(if $(CONFIG_COOVACHILLI_BINSTATUSFILE),--enable,--disable)-binstatusfile \
+	$(if $(CONFIG_COOVACHILLI_PROXY),--enable,--disable)-chilliproxy \
+	$(if $(CONFIG_COOVACHILLI_MINICONFIG),--enable,--disable)-miniconfig \
+	$(if $(CONFIG_COOVACHILLI_LAYER3),--enable,--disable)-layer3 \
+	$(if $(CONFIG_COOVACHILLI_DISABLE_LEAKYBUCKET),--disable-leakybucket) \
 	$(if $(CONFIG_COOVACHILLI_RTMON),--enable-rtmon) \
-	$(if $(CONFIG_COOVACHILLI_SESSIONPROXY),--enable-sessproxy) \
-	$(if $(CONFIG_COOVACHILLI_STATUSFILE),--enable-statusfile) \
-	$(if $(CONFIG_COOVACHILLI_TAP),,--disable-tap) \
-	$(if $(CONFIG_COOVACHILLI_UAMANYIP),,--disable-uamanyip) \
-	$(if $(CONFIG_COOVACHILLI_UAMDOMAINFILE),--enable-uamdomainfile) \
-	$(if $(CONFIG_COOVACHILLI_UAMUIPORT),,--disable-uamuiport) \
-	$(if $(CONFIG_COOVACHILLI_USERAGENT),--enable-useragent) \
-	$(if $(CONFIG_COOVACHILLI_WPAD),--enable-wpad) \
+	$(if $(CONFIG_COOVACHILLI_CURL),--with-curl) \
+	$(if $(CONFIG_COOVACHILLI_DEBUG),--enable,--disable)-debug \
+	$(if $(CONFIG_COOVACHILLI_VERBOSE),--enable,--disable)-debug2 \
 	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
 	)
 endef
@@ -191,25 +143,25 @@ define Package/coova-chilli/install
 	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/chilli.conf $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/chilli
 	$(CP) $(PKG_INSTALL_DIR)/etc/chilli/* $(1)/etc/chilli/
-	$(RM) $(1)/etc/chilli/gui-config-default.ini
-	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/etc/chilli/defaults $(1)/etc/chilli/
+	$(if $(CONFIG_COOVACHILLI_MINIPORTAL),, \
+		rm -rf $(1)/etc/chilli/www; \
+	)
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) files/chilli.config $(1)/etc/config/chilli
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface
-	$(INSTALL_DATA) ./files/chilli.hotplug $(1)/etc/hotplug.d/iface/30-chilli
+	$(INSTALL_DATA) files/chilli.hotplug $(1)/etc/hotplug.d/iface/30-chilli
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/chilli* $(1)/usr/sbin/
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so.* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) files/chilli.init $(1)/etc/init.d/chilli
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_DATA) files/chilli.config $(1)/etc/config/chilli
 	$(INSTALL_DIR) $(1)/lib/firewall
 	$(CP) files/chilli.firewall $(1)/lib/firewall/chilli.sh
-endef
-
-define KernelPackage/ipt-coova/install
-	$(INSTALL_DIR) $(1)/usr/lib/iptables
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib*.so $(1)/usr/lib/iptables/
+	$(if $(CONFIG_PACKAGE_kmod-ipt-coova), \
+		$(INSTALL_DIR) $(1)/usr/lib/iptables; \
+		$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib*.so $(1)/usr/lib/iptables/; \
+	)
 endef
 
 $(eval $(call BuildPackage,coova-chilli))
