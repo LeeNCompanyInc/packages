@@ -1,0 +1,15 @@
+--- a/src/redir.c
++++ b/src/redir.c
+@@ -3099,9 +3099,9 @@ int redir_accept(struct redir_t *redir, 
+     execv(*binqqargs, binqqargs);
+ 
+   } else {
+-
+-    return redir_main(redir, 0, 1, &address, &baddress, idx, 0);
+-
++    int ret = redir_main(redir, 0, 1, &address, &baddress, idx, 0);
++    safe_close(new_socket);
++    return ret;
+   }
+ 
+   return 0;

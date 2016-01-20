@@ -1,0 +1,22 @@
+From 7a1ae273c04cb56d57bb6e9e2d834075fc62c4d1 Mon Sep 17 00:00:00 2001
+From: Florent Morselli <florent+git@morselli.fr>
+Date: Sun, 26 Jul 2015 08:26:08 +0200
+Subject: [PATCH] Fixes compilation error debug statement already defined
+
+---
+ src/cmdline.mini.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+--- a/src/cmdline.mini.c
++++ b/src/cmdline.mini.c
+@@ -29,7 +29,9 @@
+ 
+ #include <getopt.h>
+ 
+-#define _debug_ 0
++#ifndef _debug_
++  #define _debug_ 0
++#endif
+ 
+ #define OPT_string  0
+ #define OPT_integer 1

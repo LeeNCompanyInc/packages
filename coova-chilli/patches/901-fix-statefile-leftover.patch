@@ -1,6 +1,6 @@
 --- a/src/chilli.c
 +++ b/src/chilli.c
-@@ -408,6 +408,7 @@ void chilli_signals(int *with_term, int 
+@@ -411,6 +411,7 @@ void chilli_signals(int *with_term, int 
  }
  
  int chilli_binconfig(char *file, size_t flen, pid_t pid) {
@@ -8,7 +8,7 @@
    if (pid == 0) {
      char * bc = _options.binconfig;
      if (bc) {
-@@ -419,7 +420,14 @@ int chilli_binconfig(char *file, size_t 
+@@ -422,7 +423,14 @@ int chilli_binconfig(char *file, size_t 
  	pid = getpid();
      }
    }

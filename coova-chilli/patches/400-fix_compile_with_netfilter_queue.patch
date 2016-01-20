@@ -1,6 +1,6 @@
 --- a/src/dhcp.c
 +++ b/src/dhcp.c
-@@ -864,7 +864,7 @@ int nfqueue_cb_in(struct nfq_q_handle *q
+@@ -865,7 +865,7 @@ int nfqueue_cb_in(struct nfq_q_handle *q
    struct nfqnl_msg_packet_hdr *ph;
    struct nfqnl_msg_packet_hw *hw;
    u_int32_t id = 0;
@@ -9,7 +9,7 @@
    int ret;
  
    int result = NF_DROP;
-@@ -927,7 +927,7 @@ int nfqueue_cb_out(struct nfq_q_handle *
+@@ -928,7 +928,7 @@ int nfqueue_cb_out(struct nfq_q_handle *
  		   struct nfq_data *nfa, void *cbdata) {
    struct nfqnl_msg_packet_hdr *ph;
    u_int32_t id = 0;
@@ -22,10 +22,10 @@
 +++ b/src/queue.c
 @@ -13,7 +13,7 @@ static u_int32_t print_pkt (struct nfq_d
    struct nfqnl_msg_packet_hdr *ph;
-   u_int32_t mark,ifi; 
+   u_int32_t mark,ifi;
    int id = 0;
 -  char *data;
 +  unsigned char *data;
    int ret;
-   
+ 
    ph = nfq_get_msg_packet_hdr(tb);
