@@ -26,7 +26,6 @@ define Package/libwolfmqtt
 	DEPENDS:=+libcyassl
 	TITLE:=libwolfmqtt - an MQTT client library
 	URL:=https://www.wolfssl.com/wolfSSL/Products-wolfmqtt.html
-	DEPENDS:=libcyassl
 endef
 
 define Package/libwolfmqtt/description
