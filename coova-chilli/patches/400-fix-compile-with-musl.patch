@@ -1,0 +1,25 @@
+--- a/src/system.h
++++ b/src/system.h
+@@ -117,6 +117,11 @@
+ #include <inttypes.h>
+ #endif
+ 
++#ifdef HAVE_SYS_SYSINFO_H
++#define _LINUX_SYSINFO_H
++#include <sys/sysinfo.h>
++#endif
++
+ #if defined(__linux__)
+ #include <asm/types.h>
+ #include <linux/if.h>
+@@ -169,10 +174,6 @@
+ #include <net/if_tun.h>
+ #endif
+ 
+-#ifdef HAVE_NET_ETHERNET_H
+-#include <net/ethernet.h>
+-#endif
+-
+ #ifdef HAVE_ASM_TYPES_H
+ #include <asm/types.h>
+ #endif

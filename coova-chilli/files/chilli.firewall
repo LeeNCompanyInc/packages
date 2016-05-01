@@ -1,38 +1,34 @@
 #!/bin/sh
 
+. /etc/functions.sh
+
 chilli_firewall() {
     local cfg="$1"
-
-    local network ifname tun
-
-    config_get network "$cfg" network
-
-    . /lib/functions/network.sh
-    network_get_device ifname ${network:-lan}
-
-    if [ "$ifname" = "" ]
-    then
-       config_get ifname "$cfg" dhcpif
-    fi
+    local tun ipup ipdown addr mask net dhcpif uamport uamuiport
 
     config_get tun "$cfg" tundev
+    config_get ipup "$cfg" ipup
+    config_get ipdown "$cfg" ipdown
+    config_get addr "$cfg" uamlisten
+    config_get net "$cfg" net
+    config_get dhcpif "$cfg" dhcpif
+    config_get uamport "$cfg" uamport
+    config_get uamuiport "$cfg" uamuiport
+    config_get kname "$cfg" kname
 
-    for n in ACCEPT DROP REJECT
-    do
-       iptables -F zone_${network}_${n}
-       iptables -I zone_${network}_${n} -i $tun -j $n
-       iptables -I zone_${network}_${n} -o $tun -j $n
-    done
+    if [ -f /var/run/chilli.$tun.sh ]; then
+        DEV=$tun
+        ADDR=$addr
+        MASK=$(echo "$net"|cut -d / -f 2)
+        NET=$(echo "$net"|cut -d / -f 1)
+        DHCPIF=$dhcpif
+        UAMPORT=$uamport
+        UAMUIPORT=$uamuiport
+        KNAME=$kname
+        . $ipdown
+        . $ipup
+    fi
 
-    iptables -D forward -i ${ifname} -j zone_${network}_forward
-    iptables -A forward -i ${ifname} -j DROP
-    iptables -A forward -i $tun -j zone_${network}_forward
-
-    iptables -D input -i ${ifname} -j zone_${network}
-    iptables -A input -i $tun -j zone_${network}
-
-    iptables -I zone_${network} -p tcp --dport 3990 -j ACCEPT
-    iptables -I zone_${network} -p tcp --dport 3991 -j ACCEPT
 }
 
 chilli_post_core_cb() {
