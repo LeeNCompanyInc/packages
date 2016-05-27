@@ -8,25 +8,27 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wolfmqtt
-PKG_VERSION:=0.4
+PKG_VERSION:=v0.6
 PKG_RELEASE:=1
 PKG_LICENSE:=GPL-2.0+
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://github.com/wolfSSL/wolfMQTT/releases/download/v$(PKG_VERSION)/
-PKG_MD5SUM:=351dc6f95f636c2f5779f70ad4204500
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.gz
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/wolfSSL/wolfMQTT.git
+PKG_SOURCE_VERSION:=449bf467217fd5d57eac068b0db593eeb42447da
 
 PKG_INSTALL:=1
+PKG_BUILD_DEPENDS:=libcyassl
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/libwolfmqtt
 	SECTION:=libs
 	CATEGORY:=Libraries
-	DEPENDS:=+libcyassl
+	DEPENDS:=+libcyassl +libpthread
 	TITLE:=libwolfmqtt - an MQTT client library
 	URL:=https://www.wolfssl.com/wolfSSL/Products-wolfmqtt.html
-	DEPENDS:=libcyassl
 endef
 
 define Package/libwolfmqtt/description
