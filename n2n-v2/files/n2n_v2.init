@@ -1,5 +1,6 @@
 #!/bin/sh /etc/rc.common
-# Copyright (C) 2008 OpenWrt.org
+# Copyright (C) 2008-2012 OpenWrt.org
+
 START=90
 
 config_cb() {
@@ -13,19 +14,23 @@ config_cb() {
 
         case "$configname" in
                 edge)
+                        config_get interface "$cfg" interface
                         config_get ipaddr "$cfg" ipaddr
                         config_get supernode "$cfg" supernode
                         config_get supernode2 "$cfg" supernode2
                         config_get community "$cfg" community
                         config_get key "$cfg" key
                         config_get_bool route "$cfg" route 0
+                        config_get netmask "$cfg" netmask
 
                         args="-l ${supernode}"
                         [ "$supernode2" != "" ] && args="$args -l $supernode2"
                         [ "$route" = "1" ] && args="$args -r"
+                        [ "$netmask" != "" ] && args="$args -s $netmask"
+                        [ "$interface" != "" ] && args="$args -d $interface"
 
                         if [ "$ipaddr" != "" ]; then
-                                N2N_KEY="$key" edge  $args -a $ipaddr -c $community 
+                                N2N_KEY="$key" edge $args -a $ipaddr -c $community
                         fi
                 ;;
                 supernode)
@@ -41,6 +46,6 @@ start() {
         config_load n2n
 }
 stop() {
-        killall edge
-        killall supernode
+        killall -9 edge
+        killall -9 supernode
 }
