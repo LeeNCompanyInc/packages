@@ -9,7 +9,7 @@ language: c
 compiler: gcc
 env:
   global:
-    - PACKAGE=n2n-v2
+    - PACKAGES="n2n-v2 wolfmqtt"
   matrix:
     - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
     - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ramips/mt7620a/OpenWrt-SDK-ramips-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
@@ -24,7 +24,7 @@ install:
 - file $FILE
 - tar xjf $FILE
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
-- ln -sfv $TRAVIS_BUILD_DIR/$PACKAGE package/
+- for PACKAGE in "$PACKAGES" ; do ln -sfv "$TRAVIS_BUILD_DIR/$PACKAGE" package/ ; done;
 script:
 - export PATH=$TRAVIS_BUILD_DIR/local/usr/bin:$PATH
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
