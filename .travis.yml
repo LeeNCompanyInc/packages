@@ -12,7 +12,7 @@ env:
     - SDK_URL=https://downloads.openwrt.org/attitude_adjustment/12.09/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-i486-gcc-4.6-linaro_uClibc-0.9.33.2.tar.bz2
 install:
 - sudo apt-get update
-- sudo apt-get install -y build-essential ia32-libs ccache
+- sudo apt-get install -y build-essential ia32-libs-multiarch ia32-libs ccache
 - mkdir -p $TRAVIS_BUILD_DIR/cache ; cd $TRAVIS_BUILD_DIR/cache
 - wget -c $SDK_URL
 - mkdir -p $TRAVIS_BUILD_DIR/sdk ; cd $TRAVIS_BUILD_DIR/sdk
