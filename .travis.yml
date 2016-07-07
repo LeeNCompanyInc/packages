@@ -24,7 +24,7 @@ install:
 - file $FILE
 - tar xjf $FILE
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
-- for PACKAGE in "$PACKAGES" ; do ln -sfv "$TRAVIS_BUILD_DIR/$PACKAGE" package/ ; done;
+- for PACKAGE in $PACKAGES ; do ln -sfv "$TRAVIS_BUILD_DIR/$PACKAGE" package/ ; done;
 script:
 - export PATH=$TRAVIS_BUILD_DIR/local/usr/bin:$PATH
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
