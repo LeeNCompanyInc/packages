@@ -25,6 +25,7 @@ install:
 - file $FILE
 - tar xjf $FILE
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
+- sudo mkdir -p /BB/build/$TARGET
 - sudo ln -sfv $PWD /BB/build/$TARGET/$SUBTARGET
 - for PACKAGE in $PACKAGES ; do ln -sfv "$TRAVIS_BUILD_DIR/$PACKAGE" package/ ; done;
 script:
