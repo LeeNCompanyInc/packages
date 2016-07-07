@@ -9,7 +9,7 @@ language: c
 compiler: gcc
 env:
   global:
-    - PACKAGES="n2n-v2 wolfmqtt"
+    - PACKAGES="n2n-v2 cyassl wolfmqtt"
   matrix:
     - TARGET=ar71xx SUBTARGET=generic
     - TARGET=ramips SUBTARGET=mt7620a
