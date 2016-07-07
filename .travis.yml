@@ -24,8 +24,6 @@ install:
 - file $FILE
 - tar xjf $FILE
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
-- patch -p0 < $TRAVIS_BUILD_DIR/patches/libtoolize.patch
-- export STAGING_DIR=$PWD/staging_dir
 - for PACKAGE in $PACKAGES ; do ln -sfv "$TRAVIS_BUILD_DIR/$PACKAGE" package/ ; done;
 script:
 - export PATH=$TRAVIS_BUILD_DIR/local/usr/bin:$PATH
