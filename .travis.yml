@@ -25,7 +25,7 @@ install:
 - tar xjf $FILE
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
 - export PATCH_FILES="libtool libtoolize libtool-ucxx"
-- for i in $PATCH_FILES ; do sed -ie "s#/BB/build/ar71xx/generic/staging_dir#$TRAVIS_BUILD_DIR/staging_dir#g" staging_dir/host/bin/$i ; done
+- for i in $PATCH_FILES ; do sed -ie "s#/BB/build/ar71xx/generic/staging_dir#$PWD/staging_dir#g" staging_dir/host/bin/$i ; done
 - for PACKAGE in $PACKAGES ; do ln -sfv "$TRAVIS_BUILD_DIR/$PACKAGE" package/ ; done;
 script:
 - export PATH=$TRAVIS_BUILD_DIR/local/usr/bin:$PATH
