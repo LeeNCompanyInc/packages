@@ -1,6 +1,6 @@
 sudo: true
 cache:
-  bundler: true
+  ccache: true
   directories:
   - cache/
 notifications:
