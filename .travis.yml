@@ -26,6 +26,7 @@ install:
 - file $FILE
 - tar xjf $FILE
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
+- sudo mkdir -p /home/buildbot/slave-local/${TARGET}_${SUBTARGET} ; sudo ln -sfv $PWD /home/buildbot/slave-local/${TARGET}_${SUBTARGET}/build
 - for PACKAGE in $PACKAGES ; do ln -sfv $TRAVIS_BUILD_DIR/$PACKAGE package/ ; done
 script:
 - export PATH=$TRAVIS_BUILD_DIR/local/usr/bin:$PATH
