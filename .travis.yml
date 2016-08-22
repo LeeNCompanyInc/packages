@@ -1,6 +1,6 @@
-sudo: false
+sudo: true
 cache:
-  bundler: true
+  ccache: true
   directories:
   - cache/
 notifications:
@@ -9,22 +9,25 @@ language: c
 compiler: gcc
 env:
   global:
-    - PACKAGE=n2n-v2
+    - PACKAGES="n2n-v2 cyassl wolfmqtt"
   matrix:
-    - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
-    - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ramips/mt7620a/OpenWrt-SDK-ramips-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
+    - TARGET=ar71xx SUBTARGET=generic
+    - TARGET=ramips SUBTARGET=mt7620a
 install:
 - mkdir -p $TRAVIS_BUILD_DIR/local ; cd $TRAVIS_BUILD_DIR/local
 - wget "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_3.1.6-1_amd64.deb"
 - dpkg -x *.deb .
 - mkdir -p $TRAVIS_BUILD_DIR/cache ; cd $TRAVIS_BUILD_DIR/cache
+- export SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/$TARGET/$SUBTARGET/OpenWrt-SDK-$TARGET-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
 - wget -c $SDK_URL
 - mkdir -p $TRAVIS_BUILD_DIR/sdk ; cd $TRAVIS_BUILD_DIR/sdk
 - export FILE=$TRAVIS_BUILD_DIR/cache/$(basename $SDK_URL)
 - file $FILE
 - tar xjf $FILE
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
-- ln -sfv $TRAVIS_BUILD_DIR/$PACKAGE package/
+- sudo mkdir -p /BB/build/$TARGET
+- sudo ln -sfv $PWD /BB/build/$TARGET/$SUBTARGET
+- for PACKAGE in $PACKAGES ; do ln -sfv "$TRAVIS_BUILD_DIR/$PACKAGE" package/ ; done;
 script:
 - export PATH=$TRAVIS_BUILD_DIR/local/usr/bin:$PATH
 - cd $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*
